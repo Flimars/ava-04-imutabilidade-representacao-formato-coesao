@@ -259,14 +259,21 @@ System.out.println(cemMetros.getPolegadas() == 3937.0);
 System.out.println(dozeMetros.getMilimetros() == 12000);
 
 // toString
+System.out.println(umMetro.toString()); // 1000mm
 System.out.println(umMetro.toString().equals("1000mm"));
+System.out.println(umMetroMeio.toString()); // 1500mm
 System.out.println(umMetroMeio.toString().equals("1500mm"));
+System.out.println(cemMetros.toString()); // 100000mm
 System.out.println(cemMetros.toString().equals("100000mm"));
 
 // Unidade é um enum declarado dentro da classe Comprimento com as seguintes constantes:
+System.out.println(umMetro.toString(Comprimento.Unidade.POLEGADA)); // 39.37"
 System.out.println(umMetro.toString(Comprimento.Unidade.POLEGADA).equals("39.37\""));
+System.out.println(umMetroMeio.toString(Comprimento.Unidade.CENTIMETRO)); // 150cm
 System.out.println(umMetroMeio.toString(Comprimento.Unidade.CENTIMETRO).equals("150cm"));
+System.out.println(cemMetros.toString(Comprimento.Unidade.METRO)); // 100m
 System.out.println(cemMetros.toString(Comprimento.Unidade.METRO).equals("100m"));
+System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETRO)); // 0.1km
 System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETRO).equals("0.1km"));
 
 // operações: (Comprimento é imutável)
@@ -286,6 +293,7 @@ System.out.println(vinteMetros.milimetros == 20000);
 
 Comprimento duzentosMetros = vinteMetros.vezes(10);
 System.out.println(duzentosMetros.milimetros == 200000);
+System.out.println(duzentosMetros.toString(Comprimento.Unidade.KILOMETRO)); // 0.2km
 System.out.println(duzentosMetros.toString(Comprimento.Unidade.KILOMETRO).equals("0.2km"));
 
 // 4 segmentos de 50m
