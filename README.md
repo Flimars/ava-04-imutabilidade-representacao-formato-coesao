@@ -1,17 +1,17 @@
 # Avaliação 04 Imutabilidade, representação & formato e coesão.
 
-Link do Classroom: <PENDENTE>
+Link do Classroom: <https://classroom.github.com/a/uTJfa0gn>
 
 [strong, firm, focus, always concentrate ... everything is OOP](http://youtu.be/PWiipjG7NEU)
 
-`30%` do curso concluído, [ava-02](img/5-0.gif), [ava-03](img/5-1.gif), [ava-04](img/5-2.gif) 👈 estás aqui.
+`30%` do curso concluído, 0, 1, [2](img/5-0.gif), [3](img/5-1.gif), [4](img/5-2.gif) 👈 estás aqui.
 
 
 ## Implementar e testar segundo as especificações
 
 - Esta atividade é avaliada com esforço estimado entre 6 e 12h.
 - Copie os casos de teste para o método `main` em [App.java](src/App.java), conforme o exemplo que já está no arquivo. Comente com `//` ou `/*` e `*/` as linhas que ainda não foram implementadas.
-- Os Casos de Teste podem ser corrigidos se estiverem mal escritos, mas **a especificação dos objetos não pode ser alterada**.
+- Os Casos de Teste podem ser corrigidos se estiverem mal escritos, mas **a especificação dos objetos não deve ser alterada**.
 - E, por fim, assegure-se de **assistir as videoaulas antes de começar**, pois lá estão explicados todos os conceitos e práticas presentes nesta atividade.
 
 
@@ -23,61 +23,101 @@ Considere um instante no tempo em horas, minutos e segundos, entre `00:00:00` e 
 Casos de teste:
 
 ```java
-Time t1 = new Time();
+Time zero = new Time();
 // representação string, padrão 00:00:00
-System.out.println(t1.toString().equals("00:00:00"));
-Time t2 = new Time(1, 40, 5);
-System.out.println(t2.toString().equals("01:40:05"));
-Time t3 = t1.plus(t2);
-System.out.println(t3.toString().equals("01:40:05"));
-System.out.println(t3.hours() == 1);
-System.out.println(t3.minutes() == 40);
-System.out.println(t3.seconds() == 5);
+System.out.println(zero); // 00:00:00
+System.out.println(zero.toString().equals("00:00:00"));
+
+Time umaHoraQuarentaMinCincoSeg = new Time(1, 40, 5);
+System.out.println(umaHoraQuarentaMinCincoSeg); // 01:40:05
+System.out.println(umaHoraQuarentaMinCincoSeg.toString().equals("01:40:05"));
+
+Time umaHoraQuarentaMinutosCincoSegundos = zero.plus(umaHoraQuarentaMinCincoSeg);
+System.out.println(umaHoraQuarentaMinutosCincoSegundos); // 01:40:05
+System.out.println(umaHoraQuarentaMinutosCincoSegundos.toString().equals("01:40:05"));
+System.out.println(umaHoraQuarentaMinutosCincoSegundos.hours() == 1);
+System.out.println(umaHoraQuarentaMinutosCincoSegundos.minutes() == 40);
+System.out.println(umaHoraQuarentaMinutosCincoSegundos.seconds() == 5);
 // deve ser imutável
-System.out.println(t1.hours() == 0);
-System.out.println(t1.minutes() == 0);
-System.out.println(t1.seconds() == 0);
+System.out.println(zero.hours() == 0);
+System.out.println(zero.minutes() == 0);
+System.out.println(zero.seconds() == 0);
+
 // plus
-Time t4 = t3.plus(t2);
-System.out.println(t4.toString().equals("03:20:10"));
+Time tresHorasVinteMinDezSeg = umaHoraQuarentaMinutosCincoSegundos.plus(umaHoraQuarentaMinCincoSeg);
+System.out.println(tresHorasVinteMinDezSeg); // 03:20:10
+System.out.println(tresHorasVinteMinDezSeg.toString().equals("03:20:10"));
 // implementar equals
-System.out.println(t4.equals(new Time(3, 20, 10)));
-Time t5 = t2.plusHours(1);
-System.out.println(t5.toString().equals("02:40:05"));
-Time t6 = t4.plusHours(23);
-System.out.println(t6.toString().equals("02:20:10"));
-Time t7 = t6.plusMinutes(10);
-System.out.println(t7.toString().equals("02:30:10"));
-Time t8 = t7.plusSeconds(80);
-System.out.println(t8.toString().equals("02:31:30"));
-Time t9 = new Time().plusHours(19).plusMinutes(23).plusSeconds(18);
-System.out.println(t9.toString().equals("19:23:18"));
-Time t10 = t9.plusHours(-1).plusMinutes(-1).plusSeconds(-1);
-System.out.println(t10.toString().equals("18:22:17"));
-Time t11 = t10.minusHours(2).minusMinutes(2).minusSeconds(2);
-System.out.println(t11.toString().equals("16:20:15"));
-Time t12 = t11.minusHours(-5);
-System.out.println(t12.toString().equals("21:20:15"));
-Time t13 = t11.minus(t12);
-System.out.println(t13.toString().equals("19:00:00"));
-System.out.println(t13.isMidDay() == false);
-Time t14 = t13.minus(t13);
-System.out.println(t14.toString().equals("00:00:00"));
-System.out.println(t14.isMidDay() == false);
-System.out.println(t14.isMidNight() == true);
-System.out.println(t14.plusHours(12).isMidDay() == true);
-Time t15 = new Time(3, 40);
-System.out.println(t15.toString().equals("03:40:00"));
-Time t16 = t15.shift();
-System.out.println(t16.toString().equals("15:40:00"));
-Time t17 = t16.shift();
-System.out.println(t17.toString().equals("03:40:00"));
-Time t18 = t17.tick();
-System.out.println(t18.toString().equals("03:40:01"));
-Time t19 = t18.tick().tick().tick();
-System.out.println(t19.toString().equals("03:40:04"));
-Time t20 = t19.plusHours(50).plusMinutes(50).minusSeconds(50).tick().shift();
-System.out.println(t20.toString().equals("quanto vale t20? escreva aqui"));
+System.out.println(tresHorasVinteMinDezSeg.equals(new Time(3, 20, 10)));
+
+Time duasHorasQuarentaMinCincoSeg = umaHoraQuarentaMinCincoSeg.plusHours(1);
+System.out.println(duasHorasQuarentaMinCincoSeg); // 02:40:05
+System.out.println(duasHorasQuarentaMinCincoSeg.toString().equals("02:40:05"));
+
+Time duasHorasVinteMinDezSeg = tresHorasVinteMinDezSeg.plusHours(23);
+System.out.println(duasHorasVinteMinDezSeg); // 02:20:10
+System.out.println(duasHorasVinteMinDezSeg.toString().equals("02:20:10"));
+
+Time duasHorasTrintaMinDezSeg = duasHorasVinteMinDezSeg.plusMinutes(10);
+System.out.println(duasHorasTrintaMinDezSeg); // 02:30:10
+System.out.println(duasHorasTrintaMinDezSeg.toString().equals("02:30:10"));
+
+Time duasHorasTrintaUmMinTrintaSeg = duasHorasTrintaMinDezSeg.plusSeconds(80);
+System.out.println(duasHorasTrintaUmMinTrintaSeg); // 02:31:30
+System.out.println(duasHorasTrintaUmMinTrintaSeg.toString().equals("02:31:30"));
+
+Time dezenoveHorasVinteTresMinDezoitoSeg = new Time().plusHours(19).plusMinutes(23).plusSeconds(18);
+System.out.println(dezenoveHorasVinteTresMinDezoitoSeg); // 19:23:18
+System.out.println(dezenoveHorasVinteTresMinDezoitoSeg.toString().equals("19:23:18"));
+
+Time dezoitoHorasVinteDoisMinDezesseteSeg = dezenoveHorasVinteTresMinDezoitoSeg.plusHours(-1).plusMinutes(-1).plusSeconds(-1);
+System.out.println(dezoitoHorasVinteDoisMinDezesseteSeg); // 18:22:17
+System.out.println(dezoitoHorasVinteDoisMinDezesseteSeg.toString().equals("18:22:17"));
+
+Time dezesseisHorasVinteMinQuinzeSeg = dezoitoHorasVinteDoisMinDezesseteSeg.minusHours(2).minusMinutes(2).minusSeconds(2);
+System.out.println(dezesseisHorasVinteMinQuinzeSeg); // 16:20:15
+System.out.println(dezesseisHorasVinteMinQuinzeSeg.toString().equals("16:20:15"));
+
+Time vinteUmaHorasVinteMinQuinzeSeg = dezesseisHorasVinteMinQuinzeSeg.minusHours(-5);
+System.out.println(vinteUmaHorasVinteMinQuinzeSeg); // 21:20:15
+System.out.println(vinteUmaHorasVinteMinQuinzeSeg.toString().equals("21:20:15"));
+
+Time dezenoveHoras = dezesseisHorasVinteMinQuinzeSeg.minus(vinteUmaHorasVinteMinQuinzeSeg);
+System.out.println(dezenoveHoras); // 19:00:00
+System.out.println(dezenoveHoras.toString().equals("19:00:00"));
+System.out.println(dezenoveHoras.isMidDay() == false);
+
+Time meiaNoite = dezenoveHoras.minus(dezenoveHoras);
+System.out.println(meiaNoite); // 00:00:00
+System.out.println(meiaNoite.toString().equals("00:00:00"));
+System.out.println(meiaNoite.isMidDay() == false);
+System.out.println(meiaNoite.isMidNight() == true);
+System.out.println(meiaNoite.plusHours(12).isMidDay() == true);
+System.out.println(meiaNoite.equals(zero) == true);
+
+Time tresHorasQuarentaMin = new Time(3, 40);
+System.out.println(tresHorasQuarentaMin); // 03:40:00
+System.out.println(tresHorasQuarentaMin.toString().equals("03:40:00"));
+
+Time quinzeHorasQuarentaMin = tresHorasQuarentaMin.shift();
+System.out.println(quinzeHorasQuarentaMin); // 15:40:00
+System.out.println(quinzeHorasQuarentaMin.toString().equals("15:40:00"));
+
+Time tresHorasQuarentaMinutos = quinzeHorasQuarentaMin.shift();
+System.out.println(tresHorasQuarentaMinutos); // 03:40:00
+System.out.println(tresHorasQuarentaMinutos.toString().equals("03:40:00"));
+
+Time tresHorasQuarentaMinutosUmSegundo = tresHorasQuarentaMinutos.tick();
+System.out.println(tresHorasQuarentaMinutosUmSegundo); // 03:40:01
+System.out.println(tresHorasQuarentaMinutosUmSegundo.toString().equals("03:40:01"));
+
+Time tresHorasQuarentaMinutosQuatroSegundos = tresHorasQuarentaMinutosUmSegundo.tick().tick().tick();
+System.out.println(tresHorasQuarentaMinutosQuatroSegundos); // 03:40:04
+System.out.println(tresHorasQuarentaMinutosQuatroSegundos.toString().equals("03:40:04"));
+
+Time quantoEuValho = tresHorasQuarentaMinutosQuatroSegundos.plusHours(50).plusMinutes(50).minusSeconds(50).tick().shift();
+System.out.println(quantoEuValho); // quanto?
+System.out.println(quantoEuValho.toString().equals("escreva aqui quanto eu valho"));
 ```
 
 **Desafio: a classe `Time` com apenas um atributo `int` em vez de três.**
@@ -89,52 +129,72 @@ System.out.println(t20.toString().equals("quanto vale t20? escreva aqui"));
 Implementar os métodos de conversão para `Time` conforme os casos de teste.
 
 ```java
-Time tr1 = new Time(9, 40, 15);
+Time noveQuarentaQuinze = new Time(9, 40, 15);
 // representação string, padrão 00:00:00
-System.out.println(tr1.toString().equals("09:40:15"));
+System.out.println(noveQuarentaQuinze); // 09:40:15
+System.out.println(noveQuarentaQuinze.toString().equals("09:40:15"));
 // representação string com formato alternativo
-System.out.println(tr1.toLongString().equals("9 horas 40 minutos e 15 segundos"));
+System.out.println(noveQuarentaQuinze.toLongString()); // 9 horas 40 minutos e 15 segundos
+System.out.println(noveQuarentaQuinze.toLongString().equals("9 horas 40 minutos e 15 segundos"));
+
 // fromString, formato 00:00:00
-Time tr2 = Time.fromString("01:36:00");
-System.out.println(tr2.toLongString().equals("1 hora e 36 minutos"));
+Time umaHoraTrintaSeisMinutos = Time.fromString("01:36:00");
+System.out.println(umaHoraTrintaSeisMinutos.toLongString()); // 1 hora e 36 minutos
+System.out.println(umaHoraTrintaSeisMinutos.toLongString().equals("1 hora e 36 minutos"));
+
 // fromDouble
-Time tr3 = Time.fromDouble(3.824);
-System.out.println(tr3.toLongString().equals("3 horas 49 minutos e 26 segundos"));
+Time tresPontoOitocentosVinteQuatroHoras = Time.fromDouble(3.824);
+System.out.println(tresPontoOitocentosVinteQuatroHoras.toLongString()); // 3 horas 49 minutos e 26 segundos
+System.out.println(tresPontoOitocentosVinteQuatroHoras.toLongString().equals("3 horas 49 minutos e 26 segundos"));
 // sem arredondamentos
+System.out.println(Time.fromDouble(17.1447).toLongString()); // 17 horas 8 minutos e 40 segundos
 System.out.println(Time.fromDouble(17.1447).toLongString().equals("17 horas 8 minutos e 40 segundos"));
+
 // fromSeconds
-Time tr4 = Time.fromSeconds(76632);
-// System.out.println(tr4.toLongString().equals("21 horas 15 minutos e 32 segundos")); // PATCH:
-System.out.println(tr4.toLongString().equals("21 horas 17 minutos e 12 segundos"));
-// --------------------------------------------------------------------------------
+Time setentaSeisMilSeiscentosTrintaDoisSegundos = Time.fromSeconds(76632);
+System.out.println(setentaSeisMilSeiscentosTrintaDoisSegundos.toLongString()); // 21 horas 17 minutos e 12 segundos
+System.out.println(setentaSeisMilSeiscentosTrintaDoisSegundos.toLongString().equals("21 horas 17 minutos e 12 segundos"));
+System.out.println(Time.fromSeconds(68400).toLongString()); // 19 horas
 System.out.println(Time.fromSeconds(68400).toLongString().equals("19 horas"));
+
 // toDouble
-Time tr4 = Time.fromString("16:45:11");
-System.out.println(tr4.toDouble()); // 16.75305556 aproximadamente
+Time setentaSeisMilSeiscentosTrintaDoisSegundos = Time.fromString("16:45:11");
+System.out.println(setentaSeisMilSeiscentosTrintaDoisSegundos.toDouble()); // 16.75305556 aproximadamente
 System.out.println(Time.fromString("13:04:59").toDouble()); // 13.08305556 aproximadamente
-double tr5double = Time.fromString("13:04:59").toDouble();
-Time tr5 = Time.fromDouble(tr5double);
-System.out.println(tr5.toLongString().equals("13 horas 4 minutos e 59 segundos"));
+double trezePontoUnsQuebradosHoras = Time.fromString("13:04:59").toDouble();
+Time trezeHorasQuatroMinutosCinquentaNoveSegundos = Time.fromDouble(trezePontoUnsQuebradosHoras);
+System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundos.toLongString()); //13 horas 4 minutos e 59 segundos
+System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundos.toLongString().equals("13 horas 4 minutos e 59 segundos"));
+
 // fromTime
-Time tr6 = Time.from(tr5);
+Time trezeHorasQuatroMinutosCinquentaNoveSegundosCopia = Time.from(trezeHorasQuatroMinutosCinquentaNoveSegundos);
 // toShortString
-System.out.println(tr6.toShortString().equals("13h04m59s"));
+System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundosCopia.toShortString()); // 13h04m59s
+System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundosCopia.toShortString().equals("13h04m59s"));
+System.out.println(Time.fromString("15:03:00").toShortString()); // 15h03m
 System.out.println(Time.fromString("15:03:00").toShortString().equals("15h03m"));
+System.out.println(Time.fromString("15:00:01").toShortString()); // 15h00m01s
 System.out.println(Time.fromString("15:00:01").toShortString().equals("15h00m01s"));
-// constantes
-Time tr7 = Time.MIDDAY;
-System.out.println(tr7.toShortString().equals("12h"));
-Time tr8 = Time.MIDNIGHT;
-System.out.println(tr8.toShortString().equals("00h"));
-System.out.println(Time.MIDDAY.toInt() == 43200);
+
+// constantes de classe (atributos estáticos)
+Time meioDia = Time.MIDDAY;
+System.out.println(meioDia.toShortString()); // 12h
+System.out.println(meioDia.toShortString().equals("12h"));
+System.out.println(Time.MIDDAY.toInt() == 43200); // segundos
+System.out.println(Time.MIDDAY.toDouble() == 12.0); // horas
+
+Time meiaNoite = Time.MIDNIGHT;
+System.out.println(meiaNoite.toShortString()); // 00h
+System.out.println(meiaNoite.toShortString().equals("00h"));
 System.out.println(Time.MIDNIGHT.toInt() == 0);
+System.out.println(Time.MIDNIGHT.toDouble() == 0.0);
 ```
 
 
 
 ### Implementar o objeto `Comprimento`
 
-Instâncias de `Comprimento` devem representar uma extensão ([distância entre dois pontos](https://pt.wikipedia.org/wiki/Comprimento)) a partir de várias unidades, sendo considerada inicialmente a unidade básica metro conforme SI.
+Instâncias de `Comprimento` devem representar uma extensão ([distância entre dois pontos](https://pt.wikipedia.org/wiki/Comprimento)) a partir de várias unidades, sendo considerada inicialmente a unidade básica metro, conforme SI. É usada uma precisão de milimetros, portanto este é o atributo que determina o comprimento.
 
 Considere os Casos de Teste:
 
@@ -144,7 +204,7 @@ Comprimento zero = new Comprimento();
 System.out.println(zero.milimetros == 0);
 
 // milimetros é constante, não deve compilar:
-zero.milimetros = 10;
+zero.milimetros = 10; // comente essa linha após fazê-la falhar
 
 // construtor double metro:
 Comprimento umMetro = new Comprimento(1.0);
@@ -204,10 +264,10 @@ System.out.println(umMetroMeio.toString().equals("1500mm"));
 System.out.println(cemMetros.toString().equals("100000mm"));
 
 // Unidade é um enum declarado dentro da classe Comprimento com as seguintes constantes:
-System.out.println(umMetro.toString(Comprimento.Unidade.POLEGADAS).equals("39.37\""));
-System.out.println(umMetroMeio.toString(Comprimento.Unidade.CENTIMETROS).equals("150cm"));
-System.out.println(cemMetros.toString(Comprimento.Unidade.METROS).equals("100m"));
-System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETROS).equals("0.1km"));
+System.out.println(umMetro.toString(Comprimento.Unidade.POLEGADA).equals("39.37\""));
+System.out.println(umMetroMeio.toString(Comprimento.Unidade.CENTIMETRO).equals("150cm"));
+System.out.println(cemMetros.toString(Comprimento.Unidade.METRO).equals("100m"));
+System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETRO).equals("0.1km"));
 
 // operações: (Comprimento é imutável)
 Comprimento doisMetros = umMetro.mais(umMetroMeio);
@@ -215,15 +275,18 @@ System.out.println(umMetro.milimetros == 1000);
 System.out.println(umMetroMeio.milimetros == 1500);
 System.out.println(doisMetros.milimetros == 2000);
 
-Comprimento dezMetros = doisMetros.mais(8.0);
+Comprimento dezMetros = doisMetros.mais(8.0); // + 8m
 System.out.println(dezMetros.milimetros == 10000);
+
+Comprimento dezMetrosComOitentaMilimetros = dezMetros.mais(80); // + 80mm
+System.out.println(dezMetrosComOitentaMilimetros.milimetros == 10080);
 
 Comprimento vinteMetros = dezMetros.dobro();
 System.out.println(vinteMetros.milimetros == 20000);
 
 Comprimento duzentosMetros = vinteMetros.vezes(10);
 System.out.println(duzentosMetros.milimetros == 200000);
-System.out.println(duzentosMetros.toString(Comprimento.Unidade.KILOMETROS).equals("0.2km"));
+System.out.println(duzentosMetros.toString(Comprimento.Unidade.KILOMETRO).equals("0.2km"));
 
 // 4 segmentos de 50m
 Comprimento[] segmentos = duzentosMetros.segmentos(4);
@@ -232,52 +295,65 @@ System.out.println(segmentos[1].milimetros == 50000);
 System.out.println(segmentos[2].milimetros == 50000);
 System.out.println(segmentos[3].milimetros == 50000);
 
-Comprimento[] cincoPolegadasEmTres = cincoPolegadas.segmentos(3);
-System.out.println(cincoPolegadasEmTres[0].milimetros == 42);
-System.out.println(cincoPolegadasEmTres[1].milimetros == 42);
+Comprimento[] cincoPolegadasEmTresSegmentos = cincoPolegadas.segmentos(3);
+System.out.println(cincoPolegadasEmTresSegmentos[0].milimetros == 42);
+System.out.println(cincoPolegadasEmTresSegmentos[1].milimetros == 42);
 // o acumulo do resto fica no último segmento
-System.out.println(cincoPolegadasEmTres[2].milimetros == 43);
+System.out.println(cincoPolegadasEmTresSegmentos[2].milimetros == 43);
 
+// concatenar
+Comprimento conc1 = Comprimento.fromSegmentos(segmentos);
+System.out.println(conc1.milimetros == 200000);
+System.out.println(conc1.equals(duzentosMetros));
 
+Comprimento conc2 = Comprimento.fromSegmentos(umaPolegada, cincoPolegadas, dozePolegadas);
+System.out.println(conc2.milimetros == 457);
+System.out.println(conc2.getPolegadas() == 18.0);
 
-// IMPLEMENTE E TESTE:
-//
+// IMPLEMENTE E TESTE a subtração de comprimentos
+// (lembrando que não há comprimento negativo)
 
+// Desafio (não obrigatório): ELABORAR O ENUM
+System.out.println(Comprimento.Unidade.POLEGADA.milimetros   == 25);
+System.out.println(Comprimento.Unidade.CENTIMETRO.milimetros == 10);
+System.out.println(Comprimento.Unidade.METRO.milimetros      == 1000);
+System.out.println(Comprimento.Unidade.KILOMETRO.milimetros  == 1000000);
 ```
 
 
-### Ponto
+
+### Bater Ponto
 
 Considere um sistema para bater ponto. Nessa fase de desenvolvimento ele não é muito complexo, basta informar o nome do funcionário para abrir um ponto e em seguida "bater" o ponto para registrar entrada e saída.
 
-Garanta que a classe `Ponto` tenha alta coesão. Portanto, fique a vontade para delegar operações para outras classes/objetos, inclusive adicionando métodos novos --- desde que não quebre testes anteriores, claro.
+Garanta que a classe `Ponto` tenha alta coesão. Portanto, fique a vontade para delegar operações para outras classes/objetos, inclusive adicionando métodos novos --- desde que não quebre os testes anteriores, claro.
 
 ```java
 // Spock é um Funcionário
-// Ponto representa uma presença do funcionário
+// Ponto representa a presença do funcionário
 // Ponto é mutável, pois representa um processo ao longo do tempo!!!
-Ponto ponto = new Ponto("Spock");
+Ponto pontoSpock = new Ponto("Spock");
 // toString
-System.out.println(ponto); // Spock não bateu ponto
+System.out.println(pontoSpock); // Spock não bateu ponto
 // Spock bateu ponto às 07:50:15
-ponto.bater("07:50:15");
-System.out.println(ponto); // Spock entrou às 07h50m15s
-System.out.println(ponto.toString().equals("Spock entrou às 07h50m15s")); //
-ponto.bater("12:02:10");
-System.out.println(ponto); // Spock entrou às 07h50m15s e saiu às 12h02m10s e permaneceu 4 horas, 2 minutos e 10 segundos
-System.out.println(ponto.toString().equals("Spock entrou às 07h50m15s e saiu às 12h02m10s e permaneceu 4 horas, 11 minutos e 55 segundos"));
+pontoSpock.bater("07:50:15");
+System.out.println(pontoSpock); // Spock entrou às 07h50m15s
+System.out.println(pontoSpock.toString().equals("Spock entrou às 07h50m15s")); //
+pontoSpock.bater("12:02:10");
+System.out.println(pontoSpock); // Spock entrou às 07h50m15s e saiu às 12h02m10s e permaneceu 4 horas, 2 minutos e 10 segundos
+System.out.println(pontoSpock.toString().equals("Spock entrou às 07h50m15s e saiu às 12h02m10s e permaneceu 4 horas, 11 minutos e 55 segundos"));
 
-Ponto ponto2 = new Ponto("Kirk");
-ponto2.bater("14:00:00");
-System.out.println(ponto2); // Kirk entrou às 14h
-System.out.println(ponto2.toString().equals("Kirk entrou às 14h"));
-ponto2.bater("03:10:00");
-System.out.println(ponto2); // Kirk entrou às 14h e saiu às 03h10m e permaneceu 13 horas e 10 minutos
-System.out.println(ponto2.toString().equals("Kirk entrou às 14h e saiu às 03h10m e permaneceu 13 horas e 10 minutos"));
+Ponto pontoKirk = new Ponto("Kirk");
+pontoKirk.bater("14:00:00");
+System.out.println(pontoKirk); // Kirk entrou às 14h
+System.out.println(pontoKirk.toString().equals("Kirk entrou às 14h"));
+pontoKirk.bater("03:10:00");
+System.out.println(pontoKirk); // Kirk entrou às 14h e saiu às 03h10m e permaneceu 13 horas e 10 minutos
+System.out.println(pontoKirk.toString().equals("Kirk entrou às 14h e saiu às 03h10m e permaneceu 13 horas e 10 minutos"));
 
 // não deve ser possível bater o ponto fechado
 try {
-  ponto2.bater("04:15:08");
+  pontoKirk.bater("04:15:08");
   System.out.println(false); // falhou
 } catch (IllegalStateException e) {
   System.out.println(e.getMessage()); // Entrada e saída já foram batidas e o ponto está fechado
