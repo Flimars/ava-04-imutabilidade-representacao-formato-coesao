@@ -16,9 +16,9 @@ Link do Classroom: <https://classroom.github.com/a/uTJfa0gn>
 
 
 
-### Implementar uma classe para gerar objetos imutáveis de Tempo e suas operações básicas
+### Implementar uma classe para gerar objetos imutáveis de Hora e suas operações básicas
 
-Considere um instante no tempo em horas, minutos e segundos, entre `00:00:00` e `23:59:59`. Implementar construtores e métodos para lidar com esse tempo de maneira *fail-safe* (sem rejeitar as entradas, mas adaptando-as). A API (interface do objeto) será implementada na língua inglesa com construtores para `h:m:s`, `h:m` e somente `h`. Os métodos disponíveis serão `Time#plus(Time):Time`, `Time#plusHours(int):Time`, `Time#plusMinutes(int):Time`, `Time#plusSeconds(int):Time`, `Time#minus(Time):Time`, `Time#minusHours(int):Time`, `Time#minusSeconds(int):Time`, `Time#tick():Time` (adiciona um segundo), `Time#shift():Time` (inverte o turno),`Time#isMidDay():boolean` (questiona se é meio-dia) e `Time#isMidNight():boolean` (questiona se é meia-noite).
+Considere um instante no dia representado em horas, minutos e segundos, entre `00:00:00` e `23:59:59`. Implementar construtores e métodos para lidar com esse tempo de maneira *fail-safe* (sem rejeitar as entradas, mas adaptando-as). A API (interface do objeto) será implementada na língua inglesa com construtores para `h:m:s`, `h:m`, somente `h` e até vazio (que considera `00:00:00`). Os métodos disponíveis serão `Time#plus(Time):Time`, `Time#plusHours(int):Time`, `Time#plusMinutes(int):Time`, `Time#plusSeconds(int):Time`, `Time#minus(Time):Time`, `Time#minusHours(int):Time`, `Time#minusSeconds(int):Time`, `Time#tick():Time` (adiciona um segundo), `Time#shift():Time` (inverte o turno),`Time#isMidDay():boolean` (questiona se é meio-dia) e `Time#isMidNight():boolean` (questiona se é meia-noite).
 
 Casos de teste:
 
@@ -120,13 +120,13 @@ System.out.println(quantoEuValho); // quanto?
 System.out.println(quantoEuValho.toString().equals("escreva aqui quanto eu valho"));
 ```
 
-**Desafio: a classe `Time` com apenas um atributo `int` em vez de três.**
+**Desafio (opcional): a classe `Time` com apenas um atributo `int` em vez de três.**
 
 
 
 ### Representações e Formatos de `Time`
 
-Implementar os métodos de conversão para `Time` conforme os casos de teste.
+Implementar os métodos de conversão de e para `Time` conforme os casos de teste.
 
 ```java
 Time noveQuarentaQuinze = new Time(9, 40, 15);
@@ -158,12 +158,14 @@ System.out.println(Time.fromSeconds(68400).toLongString()); // 19 horas
 System.out.println(Time.fromSeconds(68400).toLongString().equals("19 horas"));
 
 // toDouble
-Time setentaSeisMilSeiscentosTrintaDoisSegundos = Time.fromString("16:45:11");
-System.out.println(setentaSeisMilSeiscentosTrintaDoisSegundos.toDouble()); // 16.75305556 aproximadamente
+Time dezesseisHorasQuarentaCincoMinOnzeSeg = Time.fromString("16:45:11");
+System.out.println(dezesseisHorasQuarentaCincoMinOnzeSeg.toDouble()); // 16.75305556 aproximadamente
+System.out.println(dezesseisHorasQuarentaCincoMinOnzeSeg.toDouble() == 16.75305556); // faça o ajuste para o valor correto retornado
 System.out.println(Time.fromString("13:04:59").toDouble()); // 13.08305556 aproximadamente
+System.out.println(Time.fromString("13:04:59").toDouble() == 13.08305556); // faça o ajuste para o valor correto retornado
 double trezePontoUnsQuebradosHoras = Time.fromString("13:04:59").toDouble();
 Time trezeHorasQuatroMinutosCinquentaNoveSegundos = Time.fromDouble(trezePontoUnsQuebradosHoras);
-System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundos.toLongString()); //13 horas 4 minutos e 59 segundos
+System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundos.toLongString()); // 13 horas 4 minutos e 59 segundos
 System.out.println(trezeHorasQuatroMinutosCinquentaNoveSegundos.toLongString().equals("13 horas 4 minutos e 59 segundos"));
 
 // fromTime
@@ -314,6 +316,7 @@ Comprimento conc1 = Comprimento.fromSegmentos(segmentos);
 System.out.println(conc1.milimetros == 200000);
 System.out.println(conc1.equals(duzentosMetros));
 
+// usar o varargs (Google Java+varargs)
 Comprimento conc2 = Comprimento.fromSegmentos(umaPolegada, cincoPolegadas, dozePolegadas);
 System.out.println(conc2.milimetros == 457);
 System.out.println(conc2.getPolegadas() == 18.0);
