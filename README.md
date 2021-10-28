@@ -279,12 +279,12 @@ System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETRO)); // 0.1km
 System.out.println(cemMetros.toString(Comprimento.Unidade.KILOMETRO).equals("0.1km"));
 
 // operações: (Comprimento é imutável)
-Comprimento doisMetros = umMetro.mais(umMetroMeio);
+Comprimento doisMetrosMeio = umMetro.mais(umMetroMeio);
 System.out.println(umMetro.milimetros == 1000);
 System.out.println(umMetroMeio.milimetros == 1500);
-System.out.println(doisMetros.milimetros == 2000);
+System.out.println(doisMetrosMeio.milimetros == 2500);
 
-Comprimento dezMetros = doisMetros.mais(8.0); // + 8m
+Comprimento dezMetros = doisMetrosMeio.mais(7.5); // 2.5m + 7.5m
 System.out.println(dezMetros.milimetros == 10000);
 
 Comprimento dezMetrosComOitentaMilimetros = dezMetros.mais(80); // + 80mm
